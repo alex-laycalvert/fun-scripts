@@ -1,20 +1,79 @@
 #!/bin/bash
+MAX_SIZE=35
+USE_NERD_STAR=1
+XMAS_MESSAGE="Merry Christmas You Filthy Animal!"
+USAGE=" usage: christmas.sh [options]
+ 
+ A simple ASCII Christmas tree with a few customizable options.
+
+ This is NOT the malicious one, check the script for yourself.
+
+ options:
+    -h, --help          show this message
+
+    -s N, --size N      set the size of the christmas tree to integer N
+                        max value is 35
+    -S, --star          use a Nerd Font star on top of the tree (default)
+                        if a Nerd Font is not installed this will appear 
+                        to be a broken character
+    -N, --no-star       do not use a Nerd Font star on top of the tree
+    -m, --xmas-message  message to display directly under the Christmas Tree
+                        multi-worded message should be in quotes or using
+                        an escape space character
+
+ source: https://github.com/alex-laycalvert/fun-scripts
+
+ modified by a similar script by sergiolepore
+
+"
+
+for i in $( seq 1 $# ) 
+{
+    option=${@:i:1} 
+    value=${@:i+1:1}
+    if [ -z "$value" ]; then
+        if [ "$option" = "--star" ] || [ "$option" = "-S" ]; then
+            USE_NERD_STAR=1
+        elif [ "$option" = "--no-star" ] || [ "$option" = "-N" ]; then
+            USE_NERD_STAR=0
+        elif [ "$option" = "--help" ] || [ "$option" = "-h" ]; then
+            echo "$USAGE"
+            exit
+        fi
+    else
+        if [ "$option" = "--size" ] || [ "$option" = "-s" ]; then
+            if [ $value -gt $MAX_SIZE ]; then
+                size=$MAX_SIZE
+            else
+                size=$value
+            fi
+        elif [ "$option" = "--xmas-message" ] || [ "$option" = "-m" ]; then
+            XMAS_MESSAGE=$value
+        fi
+    fi
+}
 trap "tput reset; tput cnorm; exit" 2
 clear
+
+XMAS_MESSAGE_SIZE=$((${#XMAS_MESSAGE} / 2))
 tput civis
-num_lines=$(($(tput lines) / 2 - 9))
-lin=$num_lines
 col=$(($(tput cols) / 2))
 c=$((col-1))
 est=$((c-2))
 color=0
+size=20
+row=$(($(tput lines) / 2 - ${size} / 2 + 0))
+lin=$row
 tput setaf 2; tput bold
 
-tput cup $((lin - 1)) $col
-echo 六
+# nerd font star option
+if [ $USE_NERD_STAR = 1 ]; then
+    tput cup $((lin - 1)) $col
+    echo 六
+fi
 
 # Tree
-for ((i=1; i<20; i+=2))
+for ((i=1; i<size; i+=2))
 {
     tput cup $lin $col
     for ((j=1; j<=i; j++))
@@ -38,7 +97,7 @@ echo ""
 new_year=$(date +'%Y')
 let new_year++
 tput setaf 1; tput bold
-tput cup $lin $((c - 15)); echo "Merry Christmas you Filthy Animal!"
+tput cup $lin $((c - XMAS_MESSAGE_SIZE + 2)); echo "$XMAS_MESSAGE"
 tput cup $((lin + 1)) $c
 echo ""
 tput cup $((lin+ 2)) $((c - 10)); echo And lots of CODE in $new_year
@@ -47,7 +106,7 @@ k=1
 
 # Lights and decorations
 while true; do
-    for ((i=1; i<=35; i++)) {
+    for ((i=1; i<=50; i++)) {
         # Turn off the lights
         [ $k -gt 1 ] && {
             tput setaf 2; tput bold
@@ -55,9 +114,9 @@ while true; do
             unset line[$[k-1]$i]; unset column[$[k-1]$i]  # Array cleanup
         }
 
-        li=$((RANDOM % 9 + num_lines + 1))
-        start=$((c-li+num_lines))
-        co=$((RANDOM % (li-num_lines) * 2 + 1 + start))
+        li=$((RANDOM % (size / 2 - 1) + row + 1))
+        start=$((c-li+row))
+        co=$((RANDOM % (li-row) * 2 + 1 + start))
         tput setaf $color; tput bold   # Switch colors
         tput cup $li $co
         echo o
