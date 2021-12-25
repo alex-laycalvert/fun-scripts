@@ -3,7 +3,9 @@
 ### Installation (kind of)
 
 You can clone the entire repo with:  
-`git clone https://github.com/alex-laycalvert/fun-scripts.git`  
+`git clone https://github.com/alex-laycalvert/fun-scripts.git`
+
+Then you can run the script:
 `chmod +x fun-scripts/<script>.sh`  
 `/path/to/fun-scripts/<script>.sh`
 
