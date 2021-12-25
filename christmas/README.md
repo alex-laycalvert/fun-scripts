@@ -9,6 +9,10 @@ I would tell you that this is not [this Christmas Tree](https://en.wikipedia.org
 This script utilizes a Nerd Font star so you need to have one of the Nerd Fonts installed. Check them out [here](https://www.nerdfonts.com)
 
 I'll try adding some options later to beef it out and customize it a little later.
+  
+
+## Example
+![Screenshot of the tree](https://github.com/alex-laycalvert/fun-scripts/christmas/SCREENSHOT.png)
 
 ## Usage
 
