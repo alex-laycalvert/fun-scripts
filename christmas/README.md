@@ -18,16 +18,15 @@ I'll try adding some options later to beef it out and customize it a little late
 
 #### cURL
 
-    ```
-    curl https://raw.githubusercontent.com/alex-laycalvert/fun-scripts/main/christmas/christmas.sh | bash
-    ```
+```
+curl https://raw.githubusercontent.com/alex-laycalvert/fun-scripts/main/christmas/christmas.sh | bash
+```
 
 #### wget
 
-    ```
-    wget -qO- https://raw.githubusercontent.com/alex-laycalvert/fun-scripts/main/christmas/christmas.sh | bash
-    ```
-
+```
+wget -qO- https://raw.githubusercontent.com/alex-laycalvert/fun-scripts/main/christmas/christmas.sh | bash
+```
 
 ```
  usage: christmas.sh [options]
