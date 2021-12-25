@@ -12,7 +12,7 @@ I'll try adding some options later to beef it out and customize it a little late
 
 ## Example
 
-![Screenshot of the tree](SCREENSHOT.png)
+![Screenshot of the tree](SCREENSHOT.png =100x200)
 
 ## Usage
 
