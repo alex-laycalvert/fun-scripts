@@ -24,7 +24,7 @@ USAGE=" usage: christmas.sh [options]
 
  source: https://github.com/alex-laycalvert/fun-scripts
 
- modified by a similar script by sergiolepore at https://github.com/sergiolepore/ChristBASHTree
+ modified from ChristBASHTree by sergiolepore at https://github.com/sergiolepore/ChristBASHTree
 
 "
 
@@ -38,27 +38,23 @@ for i in $( seq 1 $# )
 {
     option=${@:i:1} 
     value=${@:i+1:1}
-    if [ -z "$value" ]; then
-        if [ "$option" = "--star" ] || [ "$option" = "-S" ]; then
-            USE_NERD_STAR=1
-        elif [ "$option" = "--no-star" ] || [ "$option" = "-N" ]; then
-            USE_NERD_STAR=0
-        elif [ "$option" = "--help" ] || [ "$option" = "-h" ]; then
-            echo "$USAGE"
-            exit
+    if [ "$option" = "--star" ] || [ "$option" = "-S" ]; then
+        USE_NERD_STAR=1
+    elif [ "$option" = "--no-star" ] || [ "$option" = "-N" ]; then
+        USE_NERD_STAR=0
+    elif [ "$option" = "--help" ] || [ "$option" = "-h" ]; then
+        echo "$USAGE"
+        exit
+    elif [ "$option" = "--size" ] || [ "$option" = "-s" ]; then
+        if [ $value -gt $MAX_SIZE ]; then
+            size=$MAX_SIZE
+        elif [ $value -lt $MIN_SIZE ]; then
+            size=$MIN_SIZE
+        else
+            size=$value
         fi
-    else
-        if [ "$option" = "--size" ] || [ "$option" = "-s" ]; then
-            if [ $value -gt $MAX_SIZE ]; then
-                size=$MAX_SIZE
-            elif [ $value -lt $MIN_SIZE ]; then
-                size=$MIN_SIZE
-            else
-                size=$value
-            fi
-        elif [ "$option" = "--xmas-message" ] || [ "$option" = "-m" ]; then
-            XMAS_MESSAGE=$value
-        fi
+    elif [ "$option" = "--xmas-message" ] || [ "$option" = "-m" ]; then
+        XMAS_MESSAGE=$value
     fi
 }
 trap "tput reset; tput cnorm; exit" 2
