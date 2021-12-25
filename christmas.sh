@@ -27,6 +27,14 @@ USAGE=" usage: christmas.sh [options]
 
 "
 
+col=$(($(tput cols) / 2))
+c=$((col-1))
+est=$((c-2))
+color=0
+size=20
+row=$(($(tput lines) / 2 - ${size} / 2 + 0))
+lin=$row
+
 for i in $( seq 1 $# ) 
 {
     option=${@:i:1} 
@@ -57,13 +65,6 @@ clear
 
 XMAS_MESSAGE_SIZE=$((${#XMAS_MESSAGE} / 2))
 tput civis
-col=$(($(tput cols) / 2))
-c=$((col-1))
-est=$((c-2))
-color=0
-size=20
-row=$(($(tput lines) / 2 - ${size} / 2 + 0))
-lin=$row
 tput setaf 2; tput bold
 
 # nerd font star option
