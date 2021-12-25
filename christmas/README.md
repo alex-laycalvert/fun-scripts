@@ -8,8 +8,6 @@ I would tell you that this is not [this Christmas Tree](https://en.wikipedia.org
 
 This script utilizes a Nerd Font star so you need to have one of the Nerd Fonts installed. Check them out [here](https://www.nerdfonts.com)
 
-I'll try adding some options later to beef it out and customize it a little later.
-
 ## Example
 
 ![Screenshot of the tree](SCREENSHOT.png)
@@ -29,12 +27,13 @@ wget -qO- https://raw.githubusercontent.com/alex-laycalvert/fun-scripts/main/chr
 ```
 
 #### Downloading
+
 ```
 # wget
 wget -qO- https://raw.githubusercontent.com/alex-laycalvert/fun-scripts/main/christmas/christmas.sh > ./christmas.sh
 
 # or cURL
-curl https://raw.githubusercontent.com/alex-laycalvert/fun-scripts/main/christmas/christmas.sh > ./christmas.sh
+./christmas.sh # optionscurl https://raw.githubusercontent.com/alex-laycalvert/fun-scripts/main/christmas/christmas.sh > ./christmas.sh
 
 chmod +x ./christmas.sh
 
@@ -43,7 +42,6 @@ chmod +x ./christmas.sh
 # or
 bash ./christmas.sh # options
 ```
-  
 
 ```
  usage: christmas.sh [options]
