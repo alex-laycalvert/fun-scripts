@@ -24,7 +24,7 @@ USAGE=" usage: christmas.sh [options]
 
  source: https://github.com/alex-laycalvert/fun-scripts
 
- modified by a similar script by sergiolepore
+ modified by a similar script by sergiolepore at https://github.com/sergiolepore/ChristBASHTree
 
 "
 
