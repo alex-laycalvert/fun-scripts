@@ -1,5 +1,6 @@
 #!/bin/bash
-MAX_SIZE=35
+MAX_SIZE=50
+MIN_SIZE=5
 USE_NERD_STAR=1
 XMAS_MESSAGE="Merry Christmas You Filthy Animal!"
 USAGE=" usage: christmas.sh [options]
@@ -12,7 +13,7 @@ USAGE=" usage: christmas.sh [options]
     -h, --help          show this message
 
     -s N, --size N      set the size of the christmas tree to integer N
-                        max value is 35
+                        max value is 50, min value is 5
     -S, --star          use a Nerd Font star on top of the tree (default)
                         if a Nerd Font is not installed this will appear 
                         to be a broken character
@@ -32,8 +33,6 @@ c=$((col-1))
 est=$((c-2))
 color=0
 size=20
-row=$(($(tput lines) / 2 - ${size} / 2 + 0))
-lin=$row
 
 for i in $( seq 1 $# ) 
 {
@@ -52,6 +51,8 @@ for i in $( seq 1 $# )
         if [ "$option" = "--size" ] || [ "$option" = "-s" ]; then
             if [ $value -gt $MAX_SIZE ]; then
                 size=$MAX_SIZE
+            elif [ $value -lt $MIN_SIZE ]; then
+                size=$MIN_SIZE
             else
                 size=$value
             fi
@@ -62,6 +63,15 @@ for i in $( seq 1 $# )
 }
 trap "tput reset; tput cnorm; exit" 2
 clear
+
+if [ $size -le 20 ]; then
+    row=$(($(tput lines) / 2 - ${size} / 2 + 0))
+elif [ $size -lt 47 ]; then
+    row=$(($(tput lines) / 2 - ${size} / 2 + 5))
+else
+    row=$(($(tput lines) / 2 - ${size} / 2 + 8))
+fi
+lin=$row
 
 XMAS_MESSAGE_SIZE=$((${#XMAS_MESSAGE} / 2))
 tput civis
@@ -88,11 +98,16 @@ for ((i=1; i<size; i+=2))
 tput sgr0; tput setaf 3
 
 # Trunk
-for ((i=1; i<=3; i++))
-{
+if [ $size -gt 5 ]; then
+    for ((i=1; i<=size/10 + 1; i++))
+    {
+        tput cup $((lin++)) $c
+        echo 'mWm'
+    }
+else
     tput cup $((lin++)) $c
-    echo 'mWm'
-}
+    echo ' W '
+fi
 tput cup $((lin++)) $c
 echo ""
 new_year=$(date +'%Y')
