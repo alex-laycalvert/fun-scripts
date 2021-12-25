@@ -28,6 +28,23 @@ curl https://raw.githubusercontent.com/alex-laycalvert/fun-scripts/main/christma
 wget -qO- https://raw.githubusercontent.com/alex-laycalvert/fun-scripts/main/christmas/christmas.sh | bash
 ```
 
+#### Downloading
+```
+# wget
+wget -qO- https://raw.githubusercontent.com/alex-laycalvert/fun-scripts/main/christmas/christmas.sh > ./christmas.sh
+
+# or cURL
+curl https://raw.githubusercontent.com/alex-laycalvert/fun-scripts/main/christmas/christmas.sh > ./christmas.sh
+
+chmod +x ./christmas.sh
+
+./christmas.sh # options
+
+# or
+bash ./christmas.sh # options
+```
+  
+
 ```
  usage: christmas.sh [options]
 
