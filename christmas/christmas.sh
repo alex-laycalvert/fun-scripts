@@ -1,8 +1,10 @@
 #!/bin/bash
+trap "clear; tput reset; tput cnorm; exit" 2
 MAX_SIZE=50
 MIN_SIZE=5
 USE_NERD_STAR=1
 XMAS_MESSAGE="Merry Christmas You Filthy Animal!"
+DURATION=10
 USAGE=" usage: christmas.sh [options]
  
  A simple ASCII Christmas tree with a few customizable options.
@@ -57,7 +59,6 @@ for i in $( seq 1 $# )
         XMAS_MESSAGE=$value
     fi
 }
-trap "tput reset; tput cnorm; exit" 2
 clear
 
 if [ $size -le 20 ]; then
@@ -94,7 +95,25 @@ for ((i=1; i<size; i+=2))
 tput sgr0; tput setaf 3
 
 # Trunk
-if [ $size -gt 5 ]; then
+if [ $size -ge 47 ]; then
+    for ((i=1; i<=size/10 + 3; i++))
+    {
+        tput cup $((lin++)) $((c - 3))
+        echo 'mWmWmWmWm'
+    }
+elif [ $size -ge 37 ]; then
+    for ((i=1; i<=size/10 + 3; i++))
+    {
+        tput cup $((lin++)) $((c - 2))
+        echo 'mWmWmWm'
+    }
+elif [ $size -ge 27 ]; then
+    for ((i=1; i<=size/10 + 2; i++))
+    {
+        tput cup $((lin++)) $((c - 1))
+        echo 'mWmWm'
+    }
+elif [ $size -gt 7 ]; then
     for ((i=1; i<=size/10 + 1; i++))
     {
         tput cup $((lin++)) $c
@@ -105,20 +124,16 @@ else
     echo ' W '
 fi
 tput cup $((lin++)) $c
-echo ""
 new_year=$(date +'%Y')
 let new_year++
 tput setaf 1; tput bold
-tput cup $lin $((c - XMAS_MESSAGE_SIZE + 2)); echo "$XMAS_MESSAGE"
-tput cup $((lin + 1)) $c
-echo ""
+tput cup $((lin + 1)) $((c - XMAS_MESSAGE_SIZE + 2)); echo "$XMAS_MESSAGE"
 tput cup $((lin+ 2)) $((c - 10)); echo And lots of CODE in $new_year
 let c++
 k=1
 
-# Lights and decorations
-while true; do
-    for ((i=1; i<=50; i++)) {
+decorate_loop () {
+    for ((i=1; i<=DURATION; i++)) {
         # Turn off the lights
         [ $k -gt 1 ] && {
             tput setaf 2; tput bold
@@ -146,4 +161,25 @@ while true; do
         done
     }
     k=$((k % 2 + 1))
+}
+
+decorate() {
+    while true; do
+        decorate_loop
+    done
+}
+
+# Lights and decorations
+decorate &
+decorate_pid=$!
+while true; do
+    read -n1 reply
+    if [ "$reply" = "q" ]; then
+        break
+    fi
 done
+kill -9 $decorate_pid
+wait
+tput reset
+tput cnorm
+clear
