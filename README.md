@@ -2,7 +2,7 @@
 
 #### IN PROGRESS
 
-I'm still working on making/modifying/collecting programs so there's no much here right now. Just give me som time OK? Jeez you're always on my back mom!
+I'm still working on making/modifying/collecting programs so there's no much here right now. Just give me some time OK? Jeez you're always on my back mom!
 
 ### Installation (kind of)
 
