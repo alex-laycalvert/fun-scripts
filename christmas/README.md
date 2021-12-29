@@ -14,6 +14,8 @@ This script utilizes a Nerd Font star so you need to have one of the Nerd Fonts 
 
 ## Usage
 
+**_NOTE_**: Using cURL or wget for running this may function a little weird right now such as not being able to quit using the letter 'q'. I'm working to fix this for next year when it's relavent again.
+
 #### cURL
 
 ```
