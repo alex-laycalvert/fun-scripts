@@ -25,6 +25,7 @@ pub const DEFAULT_BAR_COLOR: u8 = 4;
 pub const DEFAULT_BAR_CHAR: char = '|';
 pub const DEFAULT_BAR_THICKNESS: u16 = 3;
 pub const DEFAULT_MESSAGE: &str = "Happy New Year";
+pub const DEFAULT_MSG_COLOR: u8 = 7;
 pub const DEFAULT_TIME_COLOR: u8 = 4;
 
 pub const HELP: &str = "--help";
@@ -45,6 +46,8 @@ pub const BAR_THICKNESS: &str = "--bar-thickness";
 pub const BAR_THICKNESS_SHORT: &str = "-T";
 pub const MESSAGE: &str = "--message";
 pub const MESSAGE_SHORT: &str = "-m";
+pub const MESSAGE_COLOR: &str = "--message-color";
+pub const MESSAGE_COLOR_SHORT: &str = "-M";
 pub const TIME_COLOR: &str = "--time-color";
 pub const TIME_COLOR_SHORT: &str = "-i";
 
@@ -58,6 +61,7 @@ pub struct Config {
     pub bar_thickness: u16,
     pub message: String,
     pub time_color: u8,
+    pub message_color: u8,
 }
 
 impl Config {
@@ -72,6 +76,7 @@ impl Config {
         let mut bar_thickness = DEFAULT_BAR_THICKNESS;
         let mut message = DEFAULT_MESSAGE;
         let mut time_color = DEFAULT_TIME_COLOR;
+        let mut message_color = DEFAULT_MSG_COLOR;
 
         for i in 0..args.len() {
             if args[i] == HELP || args[i] == HELP_SHORT {
@@ -231,10 +236,31 @@ impl Config {
                 } else {
                     time_color = value;
                 }
+            } else if args[i] == MESSAGE_COLOR || args[i] == MESSAGE_COLOR_SHORT {
+                if i + 1 == args.len() {
+                    return Err("No value specified for message color");
+                }
+                let value = &args[i + 1];
+                let value: u8 = match value.trim().parse() {
+                    Ok(v) => v,
+                    Err(_) => {
+                        Config::print_usage();
+                        eprintln!("Unable to process value for message color: {}", value);
+                        exit(1);
+                    },
+                };
+                if value < MIN_COLOR_CODE {
+                    message_color = MIN_COLOR_CODE;
+                } else if value > MAX_COLOR_CODE {
+                    message_color = MAX_COLOR_CODE;
+                } else {
+                    message_color = value;
+                }
             }
+
         }
         let message = String::from(message);
-        Ok( Config { radius, color_code, circle_char, circle_thickness, bar_color, bar_char, bar_thickness, message, time_color } )
+        Ok( Config { radius, color_code, circle_char, circle_thickness, bar_color, bar_char, bar_thickness, message, time_color, message_color } )
     }
 
 
@@ -281,7 +307,7 @@ pub fn draw_message(col: u16, row: u16, message: &str, color: u8) -> crossterm::
         col = 2;
     }
     if row <= 1 {
-        row = 2;
+        row = 1;
     }
     let msg_len = message.len() as u16;
     // top border
@@ -322,6 +348,11 @@ pub fn draw_circle(origin_col: u16, origin_row: u16, radius: u16, character: cha
             }
         }
     }
+    Ok(())
+}
+
+pub fn move_cursor(col: u16, row: u16) -> crossterm::Result<()> {
+    stdout().queue(cursor::MoveTo(col, row))?;
     Ok(())
 }
 

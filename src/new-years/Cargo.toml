@@ -9,5 +9,4 @@ edition = "2021"
 rand = "0.8.4"
 crossterm  = "0.22.1"
 chrono = "0.4"
-datetime = "0.5.2"
-
+figlet-rs = "0.1.3"
