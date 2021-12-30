@@ -1,0 +1,17 @@
+[package]
+name = "newyears"
+version = "1.0.0"
+edition = "2021"
+authors = ["Alex Lay-Calvert <alex.laycalvert@gmail.com>"]
+license = "MIT OR Apache-2.0"
+description = "A simple New Year's countdown"
+readme = "README.md"
+homepage = "https://github.com/alex-laycalvert/fun-scripts/tree/main/src/new-years"
+repository = "https://github.com/fun-scripts"
+categories = ["misc"]
+
+[dependencies]
+rand = "0.8.4"
+crossterm  = "0.22.1"
+chrono = "0.4"
+figlet-rs = "0.1.3"
