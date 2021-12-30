@@ -1,3 +1,0 @@
-# new-years.sh
-
-A work in progress...
