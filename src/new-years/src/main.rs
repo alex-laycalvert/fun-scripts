@@ -6,9 +6,9 @@ use figlet_rs::FIGfont;
 
 use newyears::*;
 
-const TARGET_HOUR: u32 = 0;
-const TARGET_MIN: u32 = 0;
-const TARGET_SEC: u32 = 0;
+const TARGET_HOUR: u32 = 23;
+const TARGET_MIN: u32 = 59;
+const TARGET_SEC: u32 = 59;
 
 fn main() -> Result<()> {
     let args: Vec<String> = env::args().collect();
@@ -17,7 +17,7 @@ fn main() -> Result<()> {
         exit(1);
     });
     let current_year = Local::now().year();
-    if Local::today() < Local.ymd(current_year, 12, 31) {
+    if Local::today() < Local.ymd(current_year, 12, 31) && !&config.now {
         println!("Come back on December 31 to see the ball drop");
         exit(0);
     }
@@ -31,7 +31,6 @@ fn main() -> Result<()> {
         draw_fig_msg(size()?.0 / 2, size()?.1 / 2, message.to_string(), config.message_color)?;
         std::thread::sleep(std::time::Duration::from_millis(500));
     }
-    Ok(())
 }
 
 fn draw_fig_msg(start_col: u16, start_row: u16, message: String, color: u8) -> Result<()> {
