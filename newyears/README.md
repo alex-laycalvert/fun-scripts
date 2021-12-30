@@ -8,6 +8,8 @@ I'm not that great at Rust, I didn't have too much time to optimize it so there'
 
 ## Example
 
+![Screenshot of the program](SCREENSHOT.png)
+
 ## Installation
 
 This can be installed via **cargo**:
