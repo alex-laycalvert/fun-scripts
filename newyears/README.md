@@ -4,7 +4,7 @@
 
 This is a very basic countdown to the New Year that will (by default) only run on December 31st. If it is forced to run on the current date it will countdown to midnight.
 
-I'm not that great at Rust, I didn't have too much time to optimize it so there's probably a lot og bugs.
+I'm not that great at Rust, I didn't have too much time to optimize it so there's probably a lot of bugs.
 
 ## Example
 
@@ -14,6 +14,14 @@ This can be installed via **cargo**:
 
 ```
 cargo install newyears
+```
+
+Alternatively you can download the raw executable within this directory and run it.
+
+You may need to fix the permissions if downloading the executable:
+
+```
+chmod +x /path/to/newyears
 ```
 
 ## Usage
