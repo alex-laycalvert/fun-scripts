@@ -15,7 +15,12 @@ I'm not that great at Rust, I didn't have too much time to optimize it so there'
 This can be installed via **cargo**:
 
 ```
-cargo install newyears
+# In the terminal of your choice
+cd ~/Downloads    # or wherever you downloaded it
+chmod +x ./newyears
+
+# Running
+./newyears # [options]
 ```
 
 Alternatively you can download the raw executable within this directory and run it.
