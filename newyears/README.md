@@ -23,7 +23,12 @@ Alternatively you can download the raw executable within this directory and run 
 You may need to fix the permissions if downloading the executable:
 
 ```
-chmod +x /path/to/newyears
+# In the terminal of your choice
+cd ~/Downloads    # or wherever you downloaded it
+chmod +x ./newyears
+
+# Running
+./newyears # [options]
 ```
 
 ## Usage
