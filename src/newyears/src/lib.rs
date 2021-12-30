@@ -283,6 +283,8 @@ impl Config {
         println!("    -h, --help                        display this menu");
         println!("    -r <N>, --radius <N>              set radius of the New Year's ball to the integer N (default: 7, min: 3, max: 10)");
         println!("    -c <C>, --color <C>               set the color of the New Year's ball and countdown message to the color code C");
+        println!("    -C <char>, --circle-char <char>   set the character that the bar is comprised of (default: '|')");
+        println!("                                      note: must be a single character");
         println!("                                      see available color codes below");
         println!("    -t <N>, --circle-thickness <N>    set the thickness of the New' Years ball to the integer N (default: 1, min: 1, max: 3)");
         println!("    -b <C>, --bar-color <C>           set the color of the bar to the color code C");
