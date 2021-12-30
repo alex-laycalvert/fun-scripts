@@ -8,7 +8,7 @@ description = "A simple New Year's countdown"
 readme = "README.md"
 homepage = "https://github.com/alex-laycalvert/fun-scripts/tree/main/src/new-years"
 repository = "https://github.com/fun-scripts"
-categories = ["misc"]
+categories = ["games"]
 
 [dependencies]
 rand = "0.8.4"
