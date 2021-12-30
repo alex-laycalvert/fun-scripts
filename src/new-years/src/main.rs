@@ -1,6 +1,7 @@
 use std::env;
 use crossterm::{terminal::size, Result};
 use std::process::exit;
+use chrono::prelude::*;
 
 use newyears::*;
 
@@ -20,8 +21,10 @@ fn main() -> Result<()> {
 
     while curr_row + config.radius + config.circle_thickness < rows {
         clear_all()?;
-        let message = "";
-        draw_message(0, 0, message, true)?;
+        let curr_hour = Local::now().hour();
+        let curr_min = Local::now().minute();
+        let curr_sec = Local::now().second();
+        let message = curr_hour.to_string() + ":" + &curr_min.to_string() + ":" + &curr_sec.to_string();
         for i in 0..config.bar_thickness {
             draw_ver_line((ctr_col - config.bar_thickness / 2) + i, 0, rows, config.bar_char, config.bar_color)?;
         }
@@ -29,6 +32,7 @@ fn main() -> Result<()> {
         draw_hor_line(ctr_col - config.radius*2 + 1, ctr_col + config.radius*2, curr_row, '=', config.color_code)?;
         draw_hor_line(ctr_col - config.radius*2 + 1, ctr_col + config.radius*2, curr_row - config.radius / 2, '=', config.color_code)?;
         draw_hor_line(ctr_col - config.radius*2 + 1, ctr_col + config.radius*2, curr_row + config.radius / 2, '=', config.color_code)?;
+        draw_message(ctr_col - message.len() as u16 / 2, curr_row, &message, config.time_color)?;
         update()?;
         std::thread::sleep(std::time::Duration::from_millis(500));
         curr_row += 1;

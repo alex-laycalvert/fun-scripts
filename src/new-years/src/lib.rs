@@ -25,6 +25,7 @@ pub const DEFAULT_BAR_COLOR: u8 = 4;
 pub const DEFAULT_BAR_CHAR: char = '|';
 pub const DEFAULT_BAR_THICKNESS: u16 = 3;
 pub const DEFAULT_MESSAGE: &str = "Happy New Year";
+pub const DEFAULT_TIME_COLOR: u8 = 4;
 
 pub const HELP: &str = "--help";
 pub const HELP_SHORT: &str = "-h";
@@ -44,6 +45,8 @@ pub const BAR_THICKNESS: &str = "--bar-thickness";
 pub const BAR_THICKNESS_SHORT: &str = "-T";
 pub const MESSAGE: &str = "--message";
 pub const MESSAGE_SHORT: &str = "-m";
+pub const TIME_COLOR: &str = "--time-color";
+pub const TIME_COLOR_SHORT: &str = "-i";
 
 pub struct Config {
     pub radius: u16,
@@ -54,6 +57,7 @@ pub struct Config {
     pub bar_char: char,
     pub bar_thickness: u16,
     pub message: String,
+    pub time_color: u8,
 }
 
 impl Config {
@@ -67,6 +71,7 @@ impl Config {
         let mut bar_char = DEFAULT_BAR_CHAR;
         let mut bar_thickness = DEFAULT_BAR_THICKNESS;
         let mut message = DEFAULT_MESSAGE;
+        let mut time_color = DEFAULT_TIME_COLOR;
 
         for i in 0..args.len() {
             if args[i] == HELP || args[i] == HELP_SHORT {
@@ -206,10 +211,30 @@ impl Config {
                     return Err("No value specified for message");
                 }
                 message = &args[i + 1];
+            } else if args[i] == TIME_COLOR || args[i] == TIME_COLOR_SHORT {
+                if i + 1 == args.len() {
+                    return Err("No value specified for time color");
+                }
+                let value = &args[i + 1];
+                let value: u8 = match value.trim().parse() {
+                    Ok(v) => v,
+                    Err(_) => {
+                        Config::print_usage();
+                        eprintln!("Unable to process value for time color: {}", value);
+                        exit(1);
+                    },
+                };
+                if value < MIN_COLOR_CODE {
+                    time_color = MIN_COLOR_CODE;
+                } else if value > MAX_COLOR_CODE {
+                    time_color = MAX_COLOR_CODE;
+                } else {
+                    time_color = value;
+                }
             }
         }
         let message = String::from(message);
-        Ok( Config { radius, color_code, circle_char, circle_thickness, bar_color, bar_char, bar_thickness, message } )
+        Ok( Config { radius, color_code, circle_char, circle_thickness, bar_color, bar_char, bar_thickness, message, time_color } )
     }
 
 
@@ -249,24 +274,31 @@ pub fn draw_ver_line(col: u16, start_row: u16, end_row: u16, character: char, co
     Ok(())
 }
 
-pub fn draw_message(col: u16, row: u16, message: &str, with_border: bool) -> crossterm::Result<()> {
-    if !with_border {
-        stdout().queue(cursor::MoveTo(col, row))?;
-        print!("{}", message);
-    } else {
-        let msg_len = message.len() + 4;
-        stdout().queue(cursor::MoveTo(col, row))?;
-        for _i in 0..msg_len {
-            print!("=");
-        }
-        stdout().queue(cursor::MoveTo(col, row + 1))?;
-        print!("| ");
-        print!("{:?}", message);
-        print!(" |");
-        stdout().queue(cursor::MoveTo(col, row + 2))?;
-        for _i in 0..msg_len {
-            print!("=");
-        }
+pub fn draw_message(col: u16, row: u16, message: &str, color: u8) -> crossterm::Result<()> {
+    let mut col = col;
+    let mut row = row;
+    if col <= 1 {
+        col = 2;
+    }
+    if row <= 1 {
+        row = 2;
+    }
+    let msg_len = message.len() as u16;
+    // top border
+    for i in (col - 2)..(col + msg_len + 2) {
+        draw_char(i, row - 1, color_char('=', color))?;
+    }
+    // message
+    draw_char(col - 2, row, color_char('|', color))?;
+    draw_char(col - 1, row, color_char(' ', color))?;
+    for (i, &v) in message.as_bytes().iter().enumerate() {
+        draw_char(col + i as u16, row, color_char(v as char, color))?;
+    }
+    draw_char(col + msg_len, row, color_char(' ', color))?;
+    draw_char(col + msg_len + 1, row, color_char('|', color))?;
+    // bottom border
+    for i in (col - 2)..(col + msg_len + 2) {
+        draw_char(i, row + 1, color_char('=', color))?;
     }
     Ok(())
 }
