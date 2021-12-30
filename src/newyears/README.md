@@ -10,7 +10,7 @@ I'm not that great at Rust, I didn't have too much time to optimize it so there'
 
 ## Installation
 
-This can be installed via **cargo** via:
+This can be installed via **cargo**:
 
 ```
 cargo install newyears
