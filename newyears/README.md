@@ -14,15 +14,7 @@ I'm not that great at Rust, I didn't have too much time to optimize it so there'
 
 This can be installed via **cargo**:
 
-```
-cargo install newyears
-```
-
-Alternatively you can download the raw executable within this directory and run it.
-
-You may need to fix the permissions if downloading the executable:
-
-```
+```bash
 # In the terminal of your choice
 cd ~/Downloads    # or wherever you downloaded it
 chmod +x ./newyears
@@ -31,15 +23,26 @@ chmod +x ./newyears
 ./newyears # [options]
 ```
 
+Alternatively you can download the raw executable within this directory and run it.
+
+You may need to fix the permissions if downloading the executable:
+
+```bash
+chmod +x /path/to/newyears
+```
+
 ## Usage
 
-```
+```bash
 newyears - A simple New Year's countdown written in Rust
 
 usage: newyears [options]
 
 description:
-      This is a simple counter to midnight that will, by default, only run on December 31st of the current year. You can force it to run on the current day but it will only count to midnight because I wrote this in one day before New Year's and didn't have time to learn more Rust
+      This is a simple counter to midnight that will, by default, only run on
+      December 31st of the current year. You can force it to run on the current
+      day but it will only count to midnight because I wrote this in one day
+      before New Year's and didn't have time to learn more Rust
 
 options:
     -h, --help                        display this menu
